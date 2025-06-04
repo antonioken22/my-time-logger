@@ -26,14 +26,15 @@ export default function HomePage() {
     setMessage("");
     setError("");
     try {
-      const response = await fetch("/api/send-time-log", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ logType }),
+      // Construct the URL with logType as a query parameter
+      const url = `/api/send-time-log?logType=${encodeURIComponent(logType)}`;
+
+      const response = await fetch(url, {
+        method: "GET",
       });
+
       const data = await response.json();
+
       if (response.ok) {
         setMessage(
           `Successfully sent Time ${logType} reply. Time: ${data.time}. Subject: ${data.subject}. Thread ID: ${data.threadId}`
@@ -43,8 +44,8 @@ export default function HomePage() {
           `Failed to send email: ${data.message || "Unknown error from API"}`
         );
       }
-    } catch (err: any) {
-      setError("An unexpected error occurred: " + err.message);
+    } catch (error) {
+      setError("An unexpected error occurred: " + error);
     } finally {
       setLoading(false);
     }

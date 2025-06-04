@@ -8,13 +8,10 @@ import {
 } from "@/utils/dates";
 import { findThreadBySubjectAndParticipant } from "@/utils/emails";
 
-type RequestBody = {
-  logType: TimeLogType;
-};
-
-export async function POST(request: Request) {
+export async function GET(request: Request) {
   try {
-    const { logType } = (await request.json()) as RequestBody;
+    const { searchParams } = new URL(request.url);
+    const logType = searchParams.get("logType") as TimeLogType | null;
 
     if (!logType || (logType !== "IN" && logType !== "OUT")) {
       return NextResponse.json(
@@ -124,26 +121,8 @@ export async function POST(request: Request) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error("Failed to send email reply:", error);
-    let errorMessage = "Failed to send email reply.";
-    if (error.response && error.response.data && error.response.data.error) {
-      errorMessage = `Gmail API Error: ${
-        error.response.data.error.message ||
-        JSON.stringify(error.response.data.error)
-      }`;
-    } else if (error.message) {
-      errorMessage = error.message;
-    }
-    console.error(
-      "Error occurred with initialMessageId:",
-      process.env.HR_GMAIL_THREAD_ID,
-      "and hrOriginalSubject:",
-      process.env.HR_ORIGINAL_SUBJECT
-    );
-    return NextResponse.json(
-      { message: errorMessage, error: error.toString() },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error }, { status: 500 });
   }
 }

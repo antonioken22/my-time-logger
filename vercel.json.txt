@@ -4,6 +4,8 @@
 //
 // To use one of these examples, copy the 'crons' array
 // into your actual vercel.json file.
+// Your API endpoint (the 'path') will need to read any necessary parameters
+// (like 'logType') from the request's query string.
 
 // ---------------------------------------------------------------------------
 // Example 1: Standard Monday to Friday (PHT)
@@ -12,28 +14,20 @@
 {
   "crons": [
     {
-      "path": "/api/send-time-log", // Your API endpoint
-      "method": "POST",
-      "body": { "logType": "IN" },
+      "path": "/api/send-time-log?logType=IN", // logType passed as a query parameter
       // Triggers around 7:50 AM PHT on Monday to Friday
       // 7:50 AM PHT = 11:50 PM UTC the PREVIOUS day.
       // "50 23 * * 0-4" means:
       //   At minute 50 past hour 23 (11:50 PM UTC)
-      //   On every day-of-month
-      //   On every month
       //   On Sunday (0) through Thursday (4) UTC
       "schedule": "50 23 * * 0-4"
     },
     {
-      "path": "/api/send-time-log",
-      "method": "POST",
-      "body": { "logType": "OUT" },
+      "path": "/api/send-time-log?logType=OUT", // logType passed as a query parameter
       // Triggers around 4:55 PM PHT on Monday to Friday
       // 4:55 PM PHT = 8:55 AM UTC the SAME day.
       // "55 8 * * 1-5" means:
       //   At minute 55 past hour 08 (8:55 AM UTC)
-      //   On every day-of-month
-      //   On every month
       //   On Monday (1) through Friday (5) UTC
       "schedule": "55 8 * * 1-5"
     }
@@ -48,18 +42,14 @@
 {
   "crons": [
     {
-      "path": "/api/send-time-log",
-      "method": "POST",
-      "body": { "logType": "IN" },
+      "path": "/api/send-time-log?logType=IN", // logType passed as a query parameter
       // Triggers around 7:50 AM PHT on Monday to Thursday
       // 7:50 AM PHT = 11:50 PM UTC the PREVIOUS day.
       // Sunday (0) through Wednesday (3) UTC for Mon-Thu PHT morning.
       "schedule": "50 23 * * 0-3"
     },
     {
-      "path": "/api/send-time-log",
-      "method": "POST",
-      "body": { "logType": "OUT" },
+      "path": "/api/send-time-log?logType=OUT", // logType passed as a query parameter
       // Triggers around 4:55 PM PHT on Monday to Thursday
       // 4:55 PM PHT = 8:55 AM UTC the SAME day.
       // Monday (1) through Thursday (4) UTC for Mon-Thu PHT afternoon.
@@ -76,9 +66,7 @@
 {
   "crons": [
     {
-      "path": "/api/send-time-log",
-      "method": "POST",
-      "body": { "logType": "IN" },
+      "path": "/api/send-time-log?logType=IN", // logType passed as a query parameter
       // For Mon, Wed, Fri PHT mornings:
       // Mon PHT morning = Sun 23:50 UTC
       // Wed PHT morning = Tue 23:50 UTC
@@ -86,9 +74,7 @@
       "schedule": "50 23 * * 0,2,4" // Sunday, Tuesday, Thursday UTC
     },
     {
-      "path": "/api/send-time-log",
-      "method": "POST",
-      "body": { "logType": "OUT" },
+      "path": "/api/send-time-log?logType=OUT", // logType passed as a query parameter
       // For Mon, Wed, Fri PHT afternoons:
       // Mon PHT afternoon = Mon 08:55 UTC
       // Wed PHT afternoon = Wed 08:55 UTC
@@ -107,9 +93,8 @@
 {
   "crons": [
     {
-      "path": "/api/send-time-log",
-      "method": "POST",
-      "body": { "logType": "IN" }, // Or "OUT", or a specific test payload
+      // logType can be 'TEST_IN', 'TEST_OUT', or any specific value for your test
+      "path": "/api/send-time-log?logType=TEST", 
       "schedule": "*/5 * * * *" // Runs at every 5th minute
     }
     // You might want to disable other cron jobs or only have one for testing

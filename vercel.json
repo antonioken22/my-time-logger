@@ -1,16 +1,12 @@
 {
   "crons": [
     {
-      "path": "/api/send-time-log",
-      "method": "POST",
-      "body": { "logType": "IN" },
-      "schedule": "50 11 5 6 *"
+      "path": "/api/send-time-log?logType=IN",
+      "schedule": "5 3 5 6 *"
     },
     {
-      "path": "/api/send-time-log",
-      "method": "POST",
-      "body": { "logType": "OUT" },
-      "schedule": "55 11 5 6 *"
+      "path": "/api/send-time-log?logType=OUT",
+      "schedule": "10 3 5 6 *"
     }
   ]
 }
