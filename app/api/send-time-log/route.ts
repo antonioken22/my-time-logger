@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     }
 
     const hrEmail = process.env.HR_EMAIL;
-    let initialMessageId = process.env.HR_GMAIL_THREAD_ID;
+    let initialMessageId = process.env.HR_GMAIL_MESSAGE_ID;
     const myEmail = process.env.MY_GMAIL_ADDRESS;
     const myName = process.env.MY_FULL_NAME_IN_GMAIL;
     const hrOriginalSubject = process.env.HR_ORIGINAL_SUBJECT;

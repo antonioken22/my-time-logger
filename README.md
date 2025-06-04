@@ -75,7 +75,7 @@ You'll need the following information from the email thread you intend to reply 
     - Open the email thread in Gmail and copy its subject line.
     - Example: `Daily Time Log Submission` or `OJT Time In/Out`
 
-3.  **`HR_GMAIL_THREAD_ID`** (This is a Message ID from an email within the thread):
+3.  **`HR_GMAIL_MESSAGE_ID`** (This is a Message ID from an email within the thread):
     - Open Gmail and navigate to the specific email thread.
     - Open any email message within that thread (preferably the first one from HR).
     - Click the **three vertical dots** (More options) icon, usually at the top-right of that specific email message.
