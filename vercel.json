@@ -1,0 +1,19 @@
+{
+  "crons": [
+    {
+      "path": "/api/send-time-log",
+      "method": "POST",
+      "body": { "logType": "IN" },
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/send-time-log",
+      "method": "POST",
+      "body": { "logType": "OUT" },
+      "schedule": "*/7 * * * *"
+    }
+  ],
+  "env": {
+    "TZ": "Asia/Manila"
+  }
+}

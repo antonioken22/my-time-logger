@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Automated Time Logger
 
-## Getting Started
+By Kenette John Antonio
 
-First, run the development server:
+## Prerequisites Before Running Locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### I. Install the following into your own computer:
+
+1. [git](https://git-scm.com/downloads)
+
+2. [Visual Studio Code](https://code.visualstudio.com/download)
+
+3. [Node.js](https://nodejs.org/en/download/package-manager) (Install the LTS Version)
+
+4. [Bun (Package Manager)](https://bun.sh/docs/installation)
+
+> _Note: Alternatively, you can use npm or yarn for package management if bun install is not preferred, but update the "Running Locally" section accordingly_
+
+### II. Google Cloud Platform & Gmail API Setup
+
+0. Make sure your account has 2-Step Verification enabled to prevent problems down the line.
+
+1. Create Google Cloud Project
+
+   - Go to [Google Cloud Console](https://console.cloud.google.com/)
+   - Create new project (e.g., "My Time Logger Bot")
+
+2. Enable Gmail API
+
+   - Navigate to **APIs & Services > Library**
+   - Search for "Gmail API" and enable it
+
+3. Configure OAuth Consent Screen
+   - Go to **APIs & Services > OAuth consent screen**
+   - **User Type:** External
+   - **App name:** "NextJS Time Logger"
+4. **User support email:** Your bot's Gmail (e.g., `juan.delacruz@gmail.com`)
+5. **Developer contact:** Your Gmail
+6. Add test users (your bot's Gmail)
+7. Save configuration
+
+### III. Create OAuth 2.0 Credentials
+
+1. Navigate to **Credentials**
+2. Click **+ CREATE CREDENTIALS > OAuth client ID**
+3. **Application type:** Web application
+4. **Name:** "Time Logger Web Client"
+5. **Authorized redirect URIs:**
+   ```cmd
+   https://developers.google.com/oauthplayground
+   ```
+6. Note generated Client ID and Client Secret
+
+### IV. Obtain Refresh Token
+
+1. Go to [OAuth 2.0 Playground](https://developers.google.com/oauthplayground)
+2. ⚙️ > **OAuth 2.0 configuration** > Use your credentials
+3. Select scope: `https://mail.google.com/`
+4. **Authorize APIs** > Complete authentication
+5. **Exchange authorization code for tokens**
+6. Note generated Refresh Token (Copy this as fast as possible)
+
+### V. Configure HR Reply Thread Variables
+
+You'll need the following information from the email thread you intend to reply to:
+
+1.  **`HR_EMAIL`**:
+
+    - This is the email address of the HR person or department who sends the email you need to reply to.
+    - Example: `hr@company.com`
+
+2.  **`HR_ORIGINAL_SUBJECT`**:
+
+    - This is the exact subject line of the email thread initiated by HR.
+    - Open the email thread in Gmail and copy its subject line.
+    - Example: `Daily Time Log Submission` or `OJT Time In/Out`
+
+3.  **`HR_GMAIL_THREAD_ID`** (This is a Message ID from an email within the thread):
+    - Open Gmail and navigate to the specific email thread.
+    - Open any email message within that thread (preferably the first one from HR).
+    - Click the **three vertical dots** (More options) icon, usually at the top-right of that specific email message.
+    - Select "**Show original**".
+    - A new tab will open displaying the raw source of the email.
+    - Look for a line that starts with `Message-ID:` (you can use Ctrl+F or Cmd+F to search).
+    - The value will look something like `<ABC123xyz789@mail.gmail.com>`.
+    - **Copy only the part _inside_ the angle brackets (`< >`)**. Do not include the angle brackets themselves.
+    - Example: `ABC123xyz789@mail.gmail.com`
+
+### VI. Configure .env
+
+- On Linux/macOS:
+
+```cmd
+cp env.template .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- On Windows (Command Prompt):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```cmd
+copy env.template .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Running Locally
 
-## Learn More
+1. Clone this repository into your computer.
 
-To learn more about Next.js, take a look at the following resources:
+2. Run this code in your terminal to install all dependencies used in this project.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```cmd
+bun install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> _(If not using Bun, use npm install or yarn install)_
 
-## Deploy on Vercel
+3. Build and run your web app at `http://localhost:3000` by running the code below in the terminal.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```cmd
+bun run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> _(If not using Bun, use npm run dev or yarn dev)_
+
+## Updating
+
+1. In your Visual Studio Code, navigate to `Source Control (Ctrl+Shift+G)`.
+
+2. Click the `...` (More Actions...) icon.
+
+3. And in the dropdown options, click `Pull`.
+
+## Deploying to Vercel
+
+1. Connect your Git Repository to Vercel.
+
+2. Configure Environment Variables in Vercel.
+
+3. Set up Cron Jobs using `vercel.json`.
+
+4. Deploy.
+
+5. Monitor.
+
+## References
+
+1. Built with Google Gemini's 2.5 Pro (preview)

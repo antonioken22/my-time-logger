@@ -1,0 +1,145 @@
+// These are examples of how to configure cron jobs in Vercel.
+// Remember that all 'schedule' times are in UTC.
+// PHT (Philippines Time) is UTC+8.
+//
+// To use one of these examples, copy the 'crons' array (and optionally 'env')
+// into your actual vercel.json file.
+
+// ---------------------------------------------------------------------------
+// Example 1: Standard Monday to Friday (PHT)
+// ---------------------------------------------------------------------------
+/*
+{
+  "crons": [
+    {
+      "path": "/api/send-time-log", // Your API endpoint
+      "method": "POST",
+      "body": { "logType": "IN" },
+      // Triggers around 7:50 AM PHT on Monday to Friday
+      // 7:50 AM PHT = 11:50 PM UTC the PREVIOUS day.
+      // "50 23 * * 0-4" means:
+      //   At minute 50 past hour 23 (11:50 PM UTC)
+      //   On every day-of-month
+      //   On every month
+      //   On Sunday (0) through Thursday (4) UTC
+      "schedule": "50 23 * * 0-4"
+    },
+    {
+      "path": "/api/send-time-log",
+      "method": "POST",
+      "body": { "logType": "OUT" },
+      // Triggers around 4:55 PM PHT on Monday to Friday
+      // 4:55 PM PHT = 8:55 AM UTC the SAME day.
+      // "55 8 * * 1-5" means:
+      //   At minute 55 past hour 08 (8:55 AM UTC)
+      //   On every day-of-month
+      //   On every month
+      //   On Monday (1) through Friday (5) UTC
+      "schedule": "55 8 * * 1-5"
+    }
+  ],
+  "env": {
+    "TZ": "Asia/Manila" // Optional: Sets timezone for new Date() in API routes
+  }
+}
+*/
+
+// ---------------------------------------------------------------------------
+// Example 2: Monday to Thursday (PHT) - Excluding Friday
+// ---------------------------------------------------------------------------
+/*
+{
+  "crons": [
+    {
+      "path": "/api/send-time-log",
+      "method": "POST",
+      "body": { "logType": "IN" },
+      // Triggers around 7:50 AM PHT on Monday to Thursday
+      // 7:50 AM PHT = 11:50 PM UTC the PREVIOUS day.
+      // Sunday (0) through Wednesday (3) UTC for Mon-Thu PHT morning.
+      "schedule": "50 23 * * 0-3"
+    },
+    {
+      "path": "/api/send-time-log",
+      "method": "POST",
+      "body": { "logType": "OUT" },
+      // Triggers around 4:55 PM PHT on Monday to Thursday
+      // 4:55 PM PHT = 8:55 AM UTC the SAME day.
+      // Monday (1) through Thursday (4) UTC for Mon-Thu PHT afternoon.
+      "schedule": "55 8 * * 1-4"
+    }
+  ],
+  "env": {
+    "TZ": "Asia/Manila"
+  }
+}
+*/
+
+// ---------------------------------------------------------------------------
+// Example 3: Specific Days - e.g., Monday, Wednesday, Friday (PHT)
+// ---------------------------------------------------------------------------
+/*
+{
+  "crons": [
+    {
+      "path": "/api/send-time-log",
+      "method": "POST",
+      "body": { "logType": "IN" },
+      // For Mon, Wed, Fri PHT mornings:
+      // Mon PHT morning = Sun 23:50 UTC
+      // Wed PHT morning = Tue 23:50 UTC
+      // Fri PHT morning = Thu 23:50 UTC
+      "schedule": "50 23 * * 0,2,4" // Sunday, Tuesday, Thursday UTC
+    },
+    {
+      "path": "/api/send-time-log",
+      "method": "POST",
+      "body": { "logType": "OUT" },
+      // For Mon, Wed, Fri PHT afternoons:
+      // Mon PHT afternoon = Mon 08:55 UTC
+      // Wed PHT afternoon = Wed 08:55 UTC
+      // Fri PHT afternoon = Fri 08:55 UTC
+      "schedule": "55 8 * * 1,3,5" // Monday, Wednesday, Friday UTC
+    }
+  ],
+  "env": {
+    "TZ": "Asia/Manila"
+  }
+}
+*/
+
+// ---------------------------------------------------------------------------
+// Example 4: For Testing - Run every 5 minutes (USE WITH CAUTION!)
+// Remember to change this back after testing.
+// ---------------------------------------------------------------------------
+/*
+{
+  "crons": [
+    {
+      "path": "/api/send-time-log",
+      "method": "POST",
+      "body": { "logType": "IN" }, // Or "OUT", or a specific test payload
+      "schedule": "*/5 * * * *" // Runs at every 5th minute
+    }
+    // You might want to disable other cron jobs or only have one for testing
+  ],
+  "env": {
+    "TZ": "Asia/Manila"
+  }
+}
+*/
+
+// ---------------------------------------------------------------------------
+// General Cron Syntax Reminder:
+//
+// *    *    *    *    *
+// │    │    │    │    │
+// │    │    │    │    │
+// │    │    │    │    └───── day of week (0 - 7) (0 or 7 is Sun, or use names)
+// │    │    │    └────────── month (1 - 12)
+// │    │    └─────────────── day of month (1 - 31)
+// │    └──────────────────── hour (0 - 23)
+// └───────────────────────── min (0 - 59)
+//
+// All times are in UTC.
+// ---------------------------------------------------------------------------
