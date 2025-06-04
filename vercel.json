@@ -4,13 +4,13 @@
       "path": "/api/send-time-log",
       "method": "POST",
       "body": { "logType": "IN" },
-      "schedule": "*/5 * * * *"
+      "schedule": "40 7 4 6 3"
     },
     {
       "path": "/api/send-time-log",
       "method": "POST",
       "body": { "logType": "OUT" },
-      "schedule": "*/7 * * * *"
+      "schedule": "45 7 4 6 3"
     }
   ],
   "env": {
