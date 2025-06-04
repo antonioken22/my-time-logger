@@ -120,13 +120,6 @@ bun run dev
 
 > _(If not using Bun, use npm run dev or yarn dev)_
 
-## Updating
-
-1. In your Visual Studio Code, navigate to `Source Control (Ctrl+Shift+G)`.
-
-2. Click the `...` (More Actions...) icon.
-
-3. And in the dropdown options, click `Pull`.
 
 ## Deploying to Vercel
 
