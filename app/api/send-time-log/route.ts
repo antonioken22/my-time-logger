@@ -3,10 +3,10 @@ import { getGmailClient } from "@/utils/googleAuth";
 
 import {
   getCurrentDateFormatted,
-  getRandomizedTime,
-  TimeLogType,
+  getCurrentPhilippineTime,
 } from "@/utils/dates";
 import { findThreadBySubjectAndParticipant } from "@/utils/emails";
+import { TimeLogType } from "@/types/time-log.type";
 
 export async function GET(request: Request) {
   try {
@@ -21,10 +21,11 @@ export async function GET(request: Request) {
     }
 
     const hrEmail = process.env.HR_EMAIL;
+    const hrOriginalSubject = process.env.HR_ORIGINAL_SUBJECT;
     let initialMessageId = process.env.HR_GMAIL_MESSAGE_ID;
+
     const myEmail = process.env.MY_GMAIL_ADDRESS;
     const myName = process.env.MY_FULL_NAME_IN_GMAIL;
-    const hrOriginalSubject = process.env.HR_ORIGINAL_SUBJECT;
 
     if (!hrEmail || !myEmail || !hrOriginalSubject) {
       console.error("Missing one or more critical environment variables:", {
@@ -68,7 +69,7 @@ export async function GET(request: Request) {
     }
 
     const currentDate = getCurrentDateFormatted();
-    const currentTime = getRandomizedTime(logType);
+    const currentTime = getCurrentPhilippineTime();
 
     // Use the known original subject for the reply
     const subject = `Re: ${hrOriginalSubject}`;

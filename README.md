@@ -2,6 +2,24 @@
 
 By Kenette John Antonio
 
+## Demo Images
+
+1. Landing Page
+
+![](/public/demo/Landing%20Page.png)
+
+2. Send Time IN
+
+![](/public/demo/Manual%20Time%20In.png)
+![](/public/demo/Gmail%20Reply%20Manual%20Time%20In.png)
+![](/public/demo/HR%20Gmail%20Reply%20Manual%20Time%20In.png)
+
+3. Send Time OUT
+
+![](/public/demo/Manual%20Time%20Out.png)
+![](/public/demo/Gmail%20Reply%20Manual%20Time%20Out.png)
+![](/public/demo/HR%20Gmail%20Reply%20Manual%20Time%20Out.png)
+
 ## Prerequisites Before Running Locally
 
 ### I. Install the following into your own computer:
@@ -119,7 +137,6 @@ bun run dev
 ```
 
 > _(If not using Bun, use npm run dev or yarn dev)_
-
 
 ## Deploying to Vercel
 

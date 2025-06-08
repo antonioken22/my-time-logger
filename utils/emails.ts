@@ -1,5 +1,19 @@
 import { gmail_v1 } from "googleapis";
 
+/**
+ * @author [Kenette John Antonio](https://github.com/antonioken22)
+ * @createdAt June 8, 2025
+ * @description Note: This queries for threads by triangulating it from the required parameters.
+ * It can be not accurate if these parameters are not unique.
+ *
+ * @todo (June 8, 2025): Find a better way to query for threads more accurately.
+ *
+ * @param gmail - An authenticated Gmail client instance.
+ * @param subjectQuery - A string to search for within the email subject lines.
+ * @param participantEmail - The email address of the participant involved in the thread.
+ * @returns A promise that resolves to the thread ID of the first matching thread or null if no match is found.
+ */
+
 export async function findThreadBySubjectAndParticipant(
   gmail: gmail_v1.Gmail,
   subjectQuery: string,

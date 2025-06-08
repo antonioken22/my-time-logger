@@ -2,11 +2,11 @@
   "crons": [
     {
       "path": "/api/send-time-log?logType=IN",
-      "schedule": "5 3 5 6 *"
+      "schedule": "55 23 * * 0-4"
     },
     {
       "path": "/api/send-time-log?logType=OUT",
-      "schedule": "10 3 5 6 *"
+      "schedule": "0 9 * * 1-5"
     }
   ]
 }

@@ -1,3 +1,8 @@
+/**
+ * Returns the current date in the format "YYYY-MM-DD".
+ *
+ * @returns A string representing the current date.
+ */
 export const getCurrentDateFormatted = (): string => {
   const now = new Date();
   const year = now.getFullYear();
@@ -6,30 +11,41 @@ export const getCurrentDateFormatted = (): string => {
   return `${year}-${month}-${day}`;
 };
 
-export type TimeLogType = "IN" | "OUT";
+/**
+ * Returns the current time in the Philippines (PHT)
+ * in the format "H:MM AM/PM".
+ *
+ * @returns A string representing the current Philippine time.
+ */
+export const getCurrentPhilippineTime = (): string => {
+  const now = new Date();
 
-export const getRandomizedTime = (logType: TimeLogType): string => {
-  let hour: number;
-  let minute: number;
-  let ampm: string;
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric", // e.g., "1", "12"
+    minute: "2-digit", // e.g., "05", "30"
+    hour12: true, // Use AM/PM
+    timeZone: "Asia/Manila", // Philippine timezone
+  });
 
-  if (logType === "IN") {
-    const randomMinutesInWindow = Math.floor(Math.random() * 6);
-    if (randomMinutesInWindow === 5) {
-      hour = 8;
-      minute = 0;
-    } else {
-      hour = 7;
-      minute = 55 + randomMinutesInWindow;
-    }
-    ampm = "AM";
-  } else {
-    hour = 5;
-    minute = Math.floor(Math.random() * 11);
-    ampm = "PM";
-  }
+  return formatter.format(now);
+};
 
-  const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
-  const formattedMinute = minute < 10 ? `0${minute}` : minute.toString();
-  return `${formattedHour}:${formattedMinute} ${ampm}`;
+/**
+ * Returns the current time in the Philippines (PHT) with seconds
+ * in the format "H:MM:SS AM/PM".
+ *
+ * @returns A string representing the current Philippine time with seconds.
+ */
+export const getCurrentPhilippineTimeWithSeconds = (): string => {
+  const now = new Date();
+
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit", // Added seconds
+    hour12: true,
+    timeZone: "Asia/Manila", // Ensures PHT is always used
+  });
+
+  return formatter.format(now);
 };

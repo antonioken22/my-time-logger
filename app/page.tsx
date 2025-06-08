@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,12 +14,27 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-import { TimeLogType } from "@/utils/dates";
+import {
+  getCurrentPhilippineTime,
+  getCurrentPhilippineTimeWithSeconds,
+} from "@/utils/dates";
+import { TimeLogType } from "@/types/time-log.type";
 
 export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
+
+  useEffect(() => {
+    setCurrentTime(getCurrentPhilippineTimeWithSeconds());
+
+    const timerId = setInterval(() => {
+      setCurrentTime(getCurrentPhilippineTimeWithSeconds());
+    }, 1000);
+
+    return () => clearInterval(timerId);
+  }, []);
 
   const sendTimeLog = async (logType: TimeLogType) => {
     setLoading(true);
@@ -61,6 +76,10 @@ export default function HomePage() {
           <CardDescription className="text-muted-foreground pt-2">
             Reply to your HR time log thread automatically using the Gmail API.
           </CardDescription>
+          <p className="text-xl font-mono text-center text-foreground pt-4">
+            {currentTime}{" "}
+            <span className="text-sm text-muted-foreground">PHT</span>
+          </p>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -75,7 +94,7 @@ export default function HomePage() {
               ) : (
                 <CheckCircle2 className="mr-2 h-5 w-5" />
               )}
-              Send Time IN (7:55-8:00 AM)
+              Send Time IN ({getCurrentPhilippineTime()})
             </Button>
             <Button
               onClick={() => sendTimeLog("OUT")}
@@ -89,7 +108,7 @@ export default function HomePage() {
               ) : (
                 <AlertCircle className="mr-2 h-5 w-5" />
               )}
-              Send Time OUT (5:00-5:10 PM)
+              Send Time OUT ({getCurrentPhilippineTime()})
             </Button>
           </div>
 
@@ -124,17 +143,12 @@ export default function HomePage() {
                 credentials are correctly set up.
               </li>
               <li>
-                Verify all required environment variables (
-                <code>MY_GMAIL_ADDRESS</code>, <code>HR_EMAIL</code>, etc.) are
-                set.
+                Verify all required environment variables are set on Vercel or
+                in your <code>.env.local</code> file.
               </li>
               <li>
-                The API route is at <code>/app/api/send-time-log/route.ts</code>
-                .
-              </li>
-              <li>
-                Utility functions (<code>googleAuth.ts</code>, etc.) should be
-                correctly placed.
+                The API route is located at{" "}
+                <code>/app/api/send-time-log/route.ts</code>.
               </li>
             </ul>
           </div>
