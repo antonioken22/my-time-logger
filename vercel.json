@@ -2,35 +2,11 @@
   "crons": [
     {
       "path": "/api/send-time-log?logType=IN",
-      "schedule": "40 23 10 6 *"
+      "schedule": "40 23 * * 0-4"
     },
     {
       "path": "/api/send-time-log?logType=OUT",
-      "schedule": "45 8 11 6 *"
-    },
-    {
-      "path": "/api/send-time-log?logType=IN",
-      "schedule": "40 23 12 6 *"
-    },
-    {
-      "path": "/api/send-time-log?logType=OUT",
-      "schedule": "45 8 13 6 *"
-    },
-    {
-      "path": "/api/send-time-log?logType=IN",
-      "schedule": "40 23 15 6 *"
-    },
-    {
-      "path": "/api/send-time-log?logType=OUT",
-      "schedule": "45 8 16 6 *"
-    },
-    {
-      "path": "/api/send-time-log?logType=IN",
-      "schedule": "40 23 16 6 *"
-    },
-    {
-      "path": "/api/send-time-log?logType=OUT",
-      "schedule": "45 8 17 6 *"
+      "schedule": "45 8 * * 1-5"
     }
   ]
 }
