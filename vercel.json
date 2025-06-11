@@ -6,7 +6,7 @@
     },
     {
       "path": "/api/send-time-log?logType=OUT",
-      "schedule": "45 8 * * 1-5"
+      "schedule": "0 9 * * 1-5"
     }
   ]
 }
