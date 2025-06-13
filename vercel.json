@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/send-time-log?logType=IN",
-      "schedule": "40 23 * * 0-4"
+      "schedule": "20 23 * * 0-4"
     },
     {
       "path": "/api/send-time-log?logType=OUT",
